@@ -9,8 +9,9 @@ import {
   TrendingUp,
   Users,
 } from "lucide-react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const SIDEBAR_ITEMS = [
   {
@@ -39,13 +40,41 @@ const Sidebar = () => {
     >
       <div className="h-full bg-gray-800 bg-opacity-50 backdrop:blur-md p-4 flex flex-col border-r border-gray-700">
         <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
+          whileHover={{ scale: 1.3 }}
+          whileTap={{ scale: 1}}
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-          className="p-2 rounded-full hover-bg-gray-700 max-w-fit"
+          className="p-2 rounded-full hover-bg-gray-700 transition-colors max-w-fit"
         >
           <Menu size={24} />
         </motion.button>
+		  <nav>
+		 
+		  {SIDEBAR_ITEMS.map((item,index)=>(
+				<Link key={item.href} to={item.href}>
+					<motion.div className="flex items-center p-3 text-gray-100 text-sm rounded-lg font-medium hover-bg-gray-700 transition-colors mb-2 mt-6">
+						<item.icon size={20} style={{color:item.color, minWidth:'20px'}}/>
+
+
+						<AnimatePresence>
+
+							{isSidebarOpen&& (
+								<motion.span className="ml-4 whitespace-nowrap"
+								initial={{opacity:0, width:0}}
+								animate={{opacity:1, width:'auto'}}
+								exit={{opacity:0, width:0}}
+								transition={{duration:0.6, delay:0.2}}>
+
+									{item.name}
+								</motion.span>
+							)}
+						</AnimatePresence>
+					</motion.div>
+				</Link>
+			))}
+
+		 
+			
+		  </nav>
       </div>
     </motion.div>
   );
