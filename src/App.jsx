@@ -4,6 +4,7 @@ import Overview from './pages/Overview'
 import Product from './pages/Product'
 import './App.css'
 import Sidebar from './components/Sidebar'
+// import Header from './components/Header'
 
 function App() {
   
@@ -18,6 +19,7 @@ function App() {
       </div>
 
       <Sidebar/>
+      {/* <Header/> */}
         <Routes>
           <Route path='/' element={<Overview />}/>
           <Route path='/product' element={<Product />}/>
