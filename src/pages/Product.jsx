@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import Stats from "../components/Stats";
 import { Zap, User, Box, GitGraphIcon, Search } from "lucide-react";
 import { useState } from "react";
+import SalesTrend from "../components/products/SalesTrend";
+import CategoryDistribution from "../components/overview/CategoryDistribution";
 
 const PRODUCT_DATA = [
 	{ id: 1, name: "Wireless Earbuds", category: "Electronics", price: 59.99, stock: 143, sales: 1200 },
@@ -91,6 +93,11 @@ const Product = () => {
             ))}
           </tbody>
         </table>
+        </div>
+        <div className="  w-max  grid grid-cols-1 gap-6">
+
+        <SalesTrend/>
+        <CategoryDistribution/>
         </div>
       </motion.div>
     </div>

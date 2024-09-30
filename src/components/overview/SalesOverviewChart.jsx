@@ -35,7 +35,7 @@ const SalesOverviewChart = () => {
       <h2 className="text-gray-100 font-semibold text-lg">Sales Overview</h2>
 
       <div className="h-80">
-        {/* This is the chart container */}
+        
         <ResponsiveContainer width={"100%"} height={"100%"}>
           <LineChart data={salesData}>
             <CartesianGrid strokeDasharray="3 3" stroke="#4B5563" />
