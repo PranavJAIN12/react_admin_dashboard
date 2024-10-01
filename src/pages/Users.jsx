@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
 import Header from "../components/Header";
 import Stats from "../components/Stats";
-import { Search, User2, UserCheck, UsersIcon, UserX } from "lucide-react";
+import { Plus, Search, Trash, User2, UserCheck, UsersIcon, UserX } from "lucide-react";
 import SalesOverviewChart from "../components/overview/SalesOverviewChart";
 import UserActivityHeatMap from "../components/Users/UserActivityHeatMap";
 import { useState, useEffect } from "react";
+import { supabase } from "./Client";
 
 const userData = [
   {
@@ -53,6 +54,42 @@ const userStats = {
 const Users = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredData, setFilteredData] = useState(userData);
+
+  const addUser=async(user)=>{
+    try {
+        const {data, error} = await supabase
+        .from("Users-Dashboard")
+        .insert([user])
+        .select();
+        if(error){
+            console.error("error inserting user", error);
+        }
+        else{
+            console.log("user added ", data)
+        }
+        
+    } catch (error) {
+        console.log("error", error)
+        
+    }
+  }
+  const deleteUser=async(userId)=>{
+    try {
+        const {data, error} = await supabase
+        .from("Users-Dashboard")
+        .delete()
+        .eq("id", userId)
+        if(error){
+            console.error("error deleting user", error);
+        }
+        else{
+            console.log("user deleted ", data)
+        }
+
+    } catch (error) {
+        console.log("error", error)
+    }
+  }
 
   useEffect(() => {
     const filtered = userData.filter((user) =>
@@ -144,6 +181,9 @@ const Users = () => {
 					<th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
 						Status
 					</th>
+                    <th className="px-6 py-3 text-center text-xs font-medium text-gray-400 uppercase tracking-wider" colSpan={2}>
+						Action
+					</th>
 				</tr>
 			</thead>
 			<tbody className="divide-y divide-gray-700">
@@ -164,6 +204,12 @@ const Users = () => {
 						<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
 							{user.status}
 						</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300"><button className="text-green-500 hover:text-green-400" onClick={() => addUser(user)}>
+  <Plus size={20} />
+</button></td>
+<td><button className="text-red-500 hover:text-red-400" onClick={() => deleteUser(user.id)}>
+  <Trash size={20} />
+</button></td>
 					</tr>
 				))}
 			</tbody>

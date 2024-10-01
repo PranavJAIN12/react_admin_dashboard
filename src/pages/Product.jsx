@@ -1,10 +1,11 @@
 import Header from "../components/Header";
-import { motion } from "framer-motion";
+import {  motion } from "framer-motion";
 import Stats from "../components/Stats";
-import { Zap, User, Box, GitGraphIcon, Search } from "lucide-react";
+import { Zap, User, Box, GitGraphIcon, Search, Plus, Trash } from "lucide-react";
 import { useState } from "react";
 import SalesTrend from "../components/products/SalesTrend";
 import CategoryDistribution from "../components/overview/CategoryDistribution";
+import { supabase } from "./Client";
 
 const PRODUCT_DATA = [
 	{ id: 1, name: "Wireless Earbuds", category: "Electronics", price: 59.99, stock: 143, sales: 1200 },
@@ -18,11 +19,53 @@ const Product = () => {
   const [searchTerm, setSearchTerm] = useState(""); 
   const [tableData, setTableData] = useState(PRODUCT_DATA);
 
+  const addProduct=async(user)=>{
+    // const userData = {
+    //   name: user.name,
+    //   category:user.category,
+    //   price:user.price,
+    //   stock:user.stock,
+    //   sales:user.sales
+      
+    // };
+    
+    try {
+      const { data, error } = await supabase
+      .from('Product-Dashboard')
+      .insert([user])
+      .select();
+    if (error) {
+      console.error('Error adding user:', error);
+    } else {
+      console.log('User added successfully:', data);
+    }
+      // console.log("added")
+    } catch (error) {
+      console.log("error:", error)
+    }
+  }
+  const deleteProduct = async (productId) => {
+    try {
+      const { data, error } = await supabase
+        .from('Product-Dashboard') 
+        .delete()
+        .eq('id', productId); 
+  
+      if (error) {
+        console.error("Error deleting product:", error);
+      } else {
+        console.log("Product deleted successfully:", data);
+      }
+    } catch (error) {
+      console.error("Error in deleteProduct:", error);
+    }
+  };
+  
   const handleSearch = (e) => {
     const term = e.target.value.toLowerCase().trim(); 
     setSearchTerm(term);
 
-    // Filter product data based on the search term
+   
     const filtered = PRODUCT_DATA.filter(
       (product) =>
         product.name.toLowerCase().includes(term) || 
@@ -74,6 +117,7 @@ const Product = () => {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Price</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Stock</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Sales</th>
+                <th className="px-6 py-3 text-xs font-medium text-gray-400 uppercase tracking-wider text-center" colSpan={2}>Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-700">
@@ -93,6 +137,16 @@ const Product = () => {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                     {element.sales}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                  <button className="text-green-500 hover:text-green-400" onClick={() => addProduct(element)}>
+  <Plus size={20} />
+</button>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                  <button className="text-red-500 hover:text-red-400" onClick={() => deleteProduct(element.id)}>
+  <Trash size={20} />
+</button>
                   </td>
                 </tr>
               ))}
