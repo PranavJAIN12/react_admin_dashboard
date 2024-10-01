@@ -4,6 +4,7 @@ import Overview from './pages/Overview'
 import Product from './pages/Product'
 import './App.css'
 import Sidebar from './components/Sidebar'
+import Users from './pages/Users'
 // import Header from './components/Header'
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Overview />}/>
           <Route path='/product' element={<Product />}/>
+          <Route path='/users' element={<Users />}/>
         </Routes>
         
       </div>
