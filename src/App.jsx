@@ -6,6 +6,7 @@ import './App.css'
 import Sidebar from './components/Sidebar'
 import Users from './pages/Users'
 import Sales from './pages/Sales'
+import Orders from './pages/Orders'
 // import Header from './components/Header'
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path='/product' element={<Product />}/>
           <Route path='/users' element={<Users />}/>
           <Route path='/sales' element={<Sales/>}/>
+          <Route path='/orders' element={<Orders/>}/>
         </Routes>
         
       </div>
