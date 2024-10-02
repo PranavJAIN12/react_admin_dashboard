@@ -7,6 +7,7 @@ import Sidebar from './components/Sidebar'
 import Users from './pages/Users'
 import Sales from './pages/Sales'
 import Orders from './pages/Orders'
+import Analytics from './pages/Analytics'
 // import Header from './components/Header'
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route path='/users' element={<Users />}/>
           <Route path='/sales' element={<Sales/>}/>
           <Route path='/orders' element={<Orders/>}/>
+          <Route path='/analytics' element={ <Analytics/>}/>
         </Routes>
         
       </div>
