@@ -2,9 +2,10 @@ import Header from "../components/Header"
 import { motion } from "framer-motion"
 import Stats from "../components/Stats"
 import { User2, UserCheck, UsersIcon, UserX } from "lucide-react"
-import Revenuevstarget from "../components/Analytics/revenuevstarget"
+
 import ChannelPerformance from "../components/Analytics/ChannelPerformance"
 import Aipowered from "../components/Analytics/Aipowered"
+import Revenuevstarget from "../components/Analytics/Revenuevstarget"
 
 
 const Analytics = () => {
